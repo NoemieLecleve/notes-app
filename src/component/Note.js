@@ -1,5 +1,9 @@
 import React from 'react'
 import Draggable from 'react-draggable'
+
+import {deleteNote} from '../service/Api'
+import EditModal from './EditModal'
+
 import './styles/NoteStyle.css'
 
 class Note extends React.Component {
@@ -12,6 +16,16 @@ class Note extends React.Component {
     return color
   }
 
+  handleDelete = (noteId) => {
+    deleteNote(noteId)
+   .then(() => console.log('La note a été supprimée'))
+  }
+/*
+  handleUpdate = (note) => {
+    this.setState({openModal: true})
+    .then(() => console.log('La note a été éditée'))
+  }
+*/
   render () {
     const { note } = this.props
     return (
@@ -26,6 +40,9 @@ class Note extends React.Component {
               <span className='description'>
                 {note.description}
               </span>
+              <button onClick={() =>this.handleDelete(note.id)}>X</button> 
+              <button type='reset' onClick={() =>this.handleUpdate(note)}>Update</button>
+              <EditModal />
             </div>
           </Draggable>
         )
